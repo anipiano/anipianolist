@@ -16,6 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from accounts import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #path('accounts/', include('allauth.urls')),
+    # todo: need to manually create our own views to prevent db-based signup and only OAuth2 permitted
+    # disable if you want to test account creation but this is not the final behaviour
+    path('', include('accounts.urls'))
 ]

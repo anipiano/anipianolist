@@ -23,7 +23,6 @@ environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -66,6 +65,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'anipianolist.urls'
 
+LOGIN_REDIRECT_URL = '/profile/'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -90,6 +91,7 @@ AUTHENTICATION_BACKENDS = [
 
 WSGI_APPLICATION = 'anipianolist.wsgi.application'
 
+SITE_ID = 1
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -105,8 +107,34 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS = env('ALLOWED_HOSTS_ARRAY')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_ARRAY')
 
+SOCIALACCOUNT_PROVIDERS = {
+    # For each OAuth based provider, either add a ``SocialApp``
+    # (``socialaccount`` app) containing the required client
+    # credentials, or list them here:
+    'discord': {
+        'APP': {
+            'client_id': env('DISCORD_OAUTH2_CLIENT_ID'),
+            'secret': env('DISCORD_OAUTH2_CLIENT_SECRET'),
+            'key': ''
+        }
+    },
+    'google': {
+        'APP': {
+            'client_id': env('GOOGLE_OAUTH2_CLIENT_ID'),
+            'secret': env('GOOGLE_OAUTH2_CLIENT_SECRET'),
+            'key': ''
+        }
+    }
+}
+
+SOCIALACCOUNT_AUTO_SIGNUP = True
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_REQUIRED = False
+SOCIALACCOUNT_EMAIL_REQUIRED = False
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
