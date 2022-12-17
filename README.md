@@ -63,8 +63,9 @@ DB_PASSWORD=password
 ### Environment variables
 Use the provided `.env.example` template to set up your environment variables for local or production instances.
 ```
-anipianolist/anipianolist/.env
+$ROOT/anipianolist/anipianolist/.env
 ``` 
+where `$ROOT` is the root of the git repository as given by `git rev-parse --show-toplevel`
 
 ## Apps
 Different components of the anipianolist application are segmented into their own app.
