@@ -37,6 +37,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # our own apps (accounts, base) MUSTTTTT be above allauth.* to take precedence
+    # please keep keqing happy by ensuring this!
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,13 +46,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'accounts',
+    'base', 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.discord',
-    'allauth.socialaccount.providers.google',
-    'accounts',
-    'base'
+    'allauth.socialaccount.providers.google'
 ]
 
 MIDDLEWARE = [
@@ -70,7 +72,7 @@ LOGIN_REDIRECT_URL = '/profile/'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'templates' ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
