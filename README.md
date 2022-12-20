@@ -6,6 +6,7 @@
 git clone https://github.com/anipiano/anipianolist
 cd anipianolist
 source env/bin/activate
+#edit your .env before starting
 python manage.py makemigrations && python manage.py migrate
 python manage.py runserver
 ```
@@ -15,6 +16,13 @@ python manage.py runserver
 - Smaller code changes can be committed, but significant changes should be PR'd and reviewed before merging with the main branch
 - If you have any trouble with anything, feel free to ask in #anipianolist on Yeh's server :D although things might look difficult, just remind yourself nothing is more difficult than Animenz Sincerely :kekw:
 - Feedback is welcome in #anipianolist on Yeh's server or #collab on Fruit's server. Or just spam ping every contributor on this GitHub repo (no don't actually do this :facepalmcry:)
+
+### Authentication
+
+You'll need to register applications in both Discord and Google to use OAuth2 authentication.
+
+1. **Discord** -
+2. **Google** - https://console.cloud.google.com/apis/credentials > OAuth2 client ID > Web application > redirect URI: `http://replace-me-you-baka.net/oauth2/google/login/callback/`
 
 ### Database
 You'll need to set some things up before you can spam your love for 150bpm in every row of the object-relational database. We use PostgreSQL over the default SQLite3 setup due to its support for write concurrency and generally better performance in our specific production use case.
@@ -70,5 +78,5 @@ where `$ROOT` is the root of the git repository as given by `git rev-parse --sho
 ## Apps
 Different components of the anipianolist application are segmented into their own app.
 
-- **accounts** - handles account management, IAM, profiles, authentication
+- **accounts** - handles account management, IAM, profiles, authentication (note this is different from `account` which is an app in `django-allauth`)
 - **base** - handles the base of the site (e.g index page, general viewing pages)
