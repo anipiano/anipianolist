@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 
+<!-- anipianolist is a community collaboration by members of the anime piano community -->
+<!-- we'd *sincerely* love you to join us on GitHub! -->
+<!-- https://github.com/anipiano/anipianolist -->
+
+{% include "core/init.html" %}
+
 <html>
   <head>
-    <title>{% block head_title %}{% endblock %}</title>
+    <title>{% block head_title %}{% endblock %} | anipianolist</title>
+    {% include "core/head.html" %}
     {% block extra_head %}
     {% endblock %}
   </head>
@@ -25,15 +32,16 @@
       <ul>
         {% if user.is_authenticated %}
         <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-        {% else %}
-        <li><a href="{% url 'account_login' %}">Sign In</a></li>
         {% endif %}
       </ul>
     </div>
-    {% block content %}
-    {% endblock %}
-    {% endblock %}
+    <main class="container">
+      <h1>{% block heading %}{% endblock %}</h1>
+      {% block content %}
+      {% endblock %}
+    </main>
     {% block extra_body %}
     {% endblock %}
   </body>
+  {% endblock %}
 </html>

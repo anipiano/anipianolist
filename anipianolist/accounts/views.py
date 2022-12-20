@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 
@@ -10,4 +10,7 @@ def profile(request):
 	return generic_render(request, 'profile')
 
 def login(request):
-	return generic_render(request, 'login')
+	if request.user.is_authenticated:
+		return redirect(profile)
+	else:
+		return generic_render(request, 'login')

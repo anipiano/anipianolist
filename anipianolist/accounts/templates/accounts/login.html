@@ -1,1 +1,16 @@
-#todo
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}
+{% trans "Login" %}
+{% endblock %}
+
+{% block heading %}
+    {% trans "Let's login~!" %}
+{% endblock %}
+
+{% block content %}
+  <a role="button" href="/oauth2/discord/login/">Login via Discord</a>
+  <a role="button" href="/oauth2/google/login/">Login via Google</a>
+{% endblock %}

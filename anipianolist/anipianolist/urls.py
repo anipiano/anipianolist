@@ -13,22 +13,32 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# onii-chan please obey pep8-senpai https://peps.python.org/pep-0008/#imports
+
 from django.contrib import admin
 from django.urls import include, path
 
-from accounts import views
+from accounts.views import login
 
 from allauth.account.views import logout
-from allauth.socialaccount.providers.google.views import oauth2_login, oauth2_callback
-from allauth.socialaccount.providers.discord.views import oauth2_login, oauth2_callback
+
+from allauth.socialaccount.providers.google.views import oauth2_login as google_oauth2_login
+from allauth.socialaccount.providers.discord.views import oauth2_login as discord_oauth2_login
+from allauth.socialaccount.providers.google.views import oauth2_callback as google_oauth2_callback
+from allauth.socialaccount.providers.discord.views import oauth2_callback as discord_oauth2_callback
+
+from allauth.socialaccount.views import login_cancelled, login_error, connections
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('accounts/', include('allauth.urls')),
-    path('accounts/logout/', logout, name="account_logout"),
-    path('accounts/google/login/', oauth2_login, name="google_login"),
-    path('accounts/google/login/callback/', oauth2_callback, name="google_callback"),
-    path('accounts/discord/login/', oauth2_login, name="discord_login"),
-    path('accounts/discord/login/callback/', oauth2_callback, name="discord_callback"),    
+    path('logout/', logout, name="account_logout"),
+    path('oauth2/google/login/', google_oauth2_login, name="google_login"),
+    path('oauth2/google/login/callback/', google_oauth2_callback, name="google_callback"),
+    path('oauth2/discord/login/', discord_oauth2_login, name="discord_login"),
+    path('oauth2/discord/login/callback/', discord_oauth2_callback, name="discord_callback"),    
+    path("login/", login, name="account_login"),
+    path("login/cancelled/", login_cancelled, name="socialaccount_login_cancelled"),
+    path("login/error/", login_error, name="socialaccount_login_error"),
+    path("connections/", connections, name="socialaccount_connections"),
     path('', include('accounts.urls'))
 ]
