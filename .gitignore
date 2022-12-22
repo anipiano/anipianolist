@@ -1,2 +1,3 @@
 anipianolist/anipianolist/.env
 db.sqlite3
+env/

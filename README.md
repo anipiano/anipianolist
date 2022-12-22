@@ -5,14 +5,14 @@
 ```bash
 git clone https://github.com/anipiano/anipianolist
 cd anipianolist
-source env/bin/activate
+pip install -r requirements.txt
 #edit your .env before starting
 python manage.py makemigrations && python manage.py migrate
 python manage.py runserver
 ```
 
 ## Before you dive in
-- We use Django 4.1.4 with PostgreSQL 14.5 and Python 3.11.1 as the backbone of this project
+- We use Django 4.1.4 with PostgreSQL 14.5 and Python 3.11.1
 - Smaller code changes can be committed, but significant changes should be PR'd and reviewed before merging with the main branch
 - If you have any trouble with anything, feel free to ask in #anipianolist on Yeh's server :D although things might look difficult, just remind yourself nothing is more difficult than Animenz Sincerely :kekw:
 - Feedback is welcome in #anipianolist on Yeh's server or #collab on Fruit's server. Or just spam ping every contributor on this GitHub repo (no don't actually do this :facepalmcry:)
@@ -21,7 +21,7 @@ python manage.py runserver
 
 You'll need to register applications in both Discord and Google to use OAuth2 authentication.
 
-1. **Discord** -
+1. **Discord** - https://discord.com/developers > New application > OAuth2 > redirect URL: http://replace-me-you-baka.net/oauth2/discord/login/callback/
 2. **Google** - https://console.cloud.google.com/apis/credentials > OAuth2 client ID > Web application > redirect URI: `http://replace-me-you-baka.net/oauth2/google/login/callback/`
 
 ### Database
@@ -49,7 +49,6 @@ sudo -u postgres psql
 ```sql
 CREATE DATABASE myproject;
 CREATE USER myprojectuser WITH PASSWORD 'password';
-CREATE USER myprojectuser WITH PASSWORD 'password';
 ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
 ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
 ALTER ROLE myprojectuser SET timezone TO 'UTC';
@@ -74,6 +73,8 @@ Use the provided `.env.example` template to set up your environment variables fo
 $ROOT/anipianolist/anipianolist/.env
 ``` 
 where `$ROOT` is the root of the git repository as given by `git rev-parse --show-toplevel`
+
+`.env` and other files beginning with a dot may be hidden by macOS. Use `Command+Shift+Dot` in Finder or `ls -a` in shell to unhide these files.
 
 ## Apps
 Different components of the anipianolist application are segmented into their own app.
