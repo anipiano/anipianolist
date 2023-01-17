@@ -4,6 +4,7 @@
 ## Getting started 
 ```bash
 git clone https://github.com/anipiano/anipianolist
+source env/bin/activate
 cd anipianolist
 pip install -r requirements.txt
 #edit your .env before starting
