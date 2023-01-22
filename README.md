@@ -13,7 +13,7 @@ python manage.py runserver
 ```
 
 ## Before you dive in
-- We use Django 4.1.4 with PostgreSQL 14.5 and Python 3.11.1
+- We use Django 4.1.4 with PostgreSQL 14.5 and Python 3.11.1 (check `requirements.txt` for full list of dependencies)
 - Smaller code changes can be committed, but significant changes should be PR'd and reviewed before merging with the main branch
 - If you have any trouble with anything, feel free to ask in #anipianolist on Yeh's server :D although things might look difficult, just remind yourself nothing is more difficult than Animenz Sincerely :kekw:
 - Feedback is welcome in #anipianolist on Yeh's server or #collab on Fruit's server. Or just spam ping every contributor on this GitHub repo (no don't actually do this :facepalmcry:)

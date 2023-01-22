@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from accounts.views import login
+from accounts.views import login, account_login_redirect
 
 from allauth.account.views import logout
 
@@ -40,5 +40,6 @@ urlpatterns = [
     path("login/cancelled/", login_cancelled, name="socialaccount_login_cancelled"),
     path("login/error/", login_error, name="socialaccount_login_error"),
     path("connections/", connections, name="socialaccount_connections"),
+    path("accounts/login/", account_login_redirect, name="account_login_redirect"),
     path('', include('accounts.urls'))
 ]

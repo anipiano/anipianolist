@@ -16,6 +16,22 @@
   <body>
     {% block body %}
 
+    <nav class="menubar">
+      <ul>
+        <li><strong>anipianolist</strong></li>
+      </ul>
+      <ul>
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+          {% if request.user.is_authenticated %}
+            <li><a href="{% url 'account_logout' %}" role="button">Sign Out</a></li>
+          {% else %}
+            <li><a href="{% url 'account_login' %}" role="button">Login</a></li>
+          {% endif %}
+      </ul>
+    </nav>
+
+    <!-- update this so it's less stupid, probably using Alerts -->
     {% if messages %}
     <div>
       <strong>Messages:</strong>
@@ -27,19 +43,13 @@
     </div>
     {% endif %}
 
-    <div>
-      <strong>Menu:</strong>
-      <ul>
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-        {% endif %}
-      </ul>
-    </div>
+
     <main class="container">
-      <h1>{% block heading %}{% endblock %}</h1>
+      <h1 class="heading">{% block heading %}{% endblock %}</h1>
       {% block content %}
       {% endblock %}
     </main>
+
     {% block extra_body %}
     {% endblock %}
   </body>
