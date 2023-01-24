@@ -1,0 +1,42 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}
+  {% trans "Delete account" %}
+{% endblock %}
+
+{% block heading %}
+    {% trans "Delete account" %}
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- todo: update this information depending on db design -->
+
+<ul>
+  <li>User data stored in our database (including reviews and ratings) will be deleted permanently</li>
+  <li>Uploaded assets (such as profile pictures) may not be deleted — contact support if you need to remove assets off our servers</li>
+  <li>Some data may temporarily persist in backups or caches for up to a month</li>
+  <li>Cached data marked for deletion is inaccessible without a legal request</li>
+  <li>You will need to start from scratch with a new account if you choose to return</li>
+  <li><strong style="color: #facaca">Once you delete your account, there is <span style="text-decoration: underline">no going back</span></strong></li>
+</ul>
+
+<p>We're sorry to see you go ;-;</p>
+
+<details>
+  <summary role="button" class="primary">I understand that my account will be permanently deleted</summary>
+  <p>Please type <kbd>Nezuko</kbd> into the verification field to delete your account permanently.</p>
+  <form action="/account-deletion/" method="post">
+      {% csrf_token %}
+      <input id="verify-deletion" onkeyup="verifyDeletion()" type="text" style="display: block" placeholder="Verification field">
+      <input type="submit" value="Delete my account now" id="koro-sensei" disabled="disabled" class="secondary">
+  </form>
+</details>
+
+<script src="{% static 'account-deletion.js' %}"></script>
+
+{% endblock %}

@@ -6,7 +6,7 @@
 
 {% include "core/init.html" %}
 
-<html>
+<html data-theme="dark">
   <head>
     <title>{% block head_title %}{% endblock %} | anipianolist</title>
     {% include "core/head.html" %}
@@ -15,7 +15,7 @@
   </head>
   <body>
     {% block body %}
-
+    <figure>
     <nav class="menubar">
       <ul>
         <li><strong>anipianolist</strong></li>
@@ -30,21 +30,16 @@
           {% endif %}
       </ul>
     </nav>
-
-    <!-- update this so it's less stupid, probably using Alerts -->
-    {% if messages %}
-    <div>
-      <strong>Messages:</strong>
-      <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-
+  </figure>
 
     <main class="container">
+      {% if messages %}
+        <div>
+          {% for message in messages %}
+          <article class="message-article {% if message.tags %}flash-{{ message.tags }}{% endif %}"><span class="flashtext {% if message.tags %}flashtext-{{ message.tags }}{% endif %}">{{ message }}</span></article>
+          {% endfor %}
+        </div>
+      {% endif %}
       <h1 class="heading">{% block heading %}{% endblock %}</h1>
       {% block content %}
       {% endblock %}

@@ -10,11 +10,52 @@
     {% trans "User settings" %}
 {% endblock %}
 
+{% load static %}
+
 {% block content %}
-<form action="/settings/" method="post">
+
+<link rel="stylesheet" href="{% static 'settings.css' %}">
+
+<form action="/settings/" enctype="multipart/form-data" method="post">
   {% csrf_token %}
-  {{ user_form.as_p }}
-  {{ profile_form.as_p }}
-  <input type="submit" value="Submit">
+  <div class="grid">
+    <article class="settings-card" style="text-align: center">
+      <img src="{{ user.profile.pfp.url }}" class="pfp settings-pfp">
+      <br><br>
+      <div class="settings-username">
+        <span>{{ user_form.username }}</span>
+        {{ user_form.username.errors }} 
+      </div>
+    </article>
+    <article class="settings-card">
+      <div>
+        <h4 class="settings-heading">Profile picture</h4>
+        <p>Only images under 10MB are accepted (~_~;)</p>
+        {{ profile_form.pfp }}
+        {{ profile_form.pfp.errors }}
+      </div>
+    </article>
+  </div>
+  <div class="grid">
+    <article class="settings-card">
+      <div>
+        <h4 class="settings-heading">Location</h4>
+        {{ profile_form.location }}
+        {{ profile_form.location.errors }}
+        <hr>
+        <h4 class="settings-heading">About me</h4>
+        {{ profile_form.bio }}
+        {{ profile_form.bio.errors }}
+      </div>
+    </article>
+    <article class="settings-card">
+        <h4 class="settings-heading">Connections</h4>
+        <p>Head over to <a href="/connections/">Connections</a> to manage your social account connections!</p>
+        <hr>
+        <h4 class="settings-heading">Deleting your account</h4>
+        <a href="/account-deletion/" role="button" class="danger">Delete account</a>
+    </article>
+  </div>
+<input type="submit" value="Update">
 </form>
 {% endblock %}

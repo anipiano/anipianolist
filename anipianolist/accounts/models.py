@@ -1,12 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+import sys, os
+sys.path.append(os.path.abspath(os.path.join('..', 'anipianolist')))
+
+from anipianolist.validators import validate_file_size 
+
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 		# This extends on top of the default Django user model
 		# like ForeignKey but a one-to-one relationship
 		# hence model deleted when User is deleted
-	pfp = models.ImageField(default='default.jpg', upload_to='profile_pics', null=True)
+	pfp = models.ImageField(default='pfp/default.jpg', upload_to='pfp/%Y/%m/%d/', null=True, validators=[validate_file_size])
 	location = models.CharField(default=None, max_length=69, null=True)
 	bio = models.TextField(default=None, max_length=2000, null=True)
 

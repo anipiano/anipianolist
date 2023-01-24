@@ -17,6 +17,8 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from accounts.views import login, account_login_redirect
 
@@ -41,5 +43,5 @@ urlpatterns = [
     path("login/error/", login_error, name="socialaccount_login_error"),
     path("connections/", connections, name="socialaccount_connections"),
     path("accounts/login/", account_login_redirect, name="account_login_redirect"),
-    path('', include('accounts.urls'))
-]
+    path('', include('accounts.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

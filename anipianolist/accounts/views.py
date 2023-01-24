@@ -15,6 +15,19 @@ def generic_render(request, pagename):
 def account_login_redirect(request):
 	return redirect(login)
 
+@login_required
+def account_deletion(request):
+	if request.method == 'POST':
+		try:
+			user = User.objects.get(username=request.user.username)
+			user.delete()
+			messages.success(request, "Your account has been deleted. Bai bai~")
+		except:
+			messages.error(request, "Something went wrong while trying to delete your account. Please contact support >_<")
+		return redirect('/')
+	else:
+		return generic_render(request, 'account-deletion')
+
 def profile(request):
 	return generic_render(request, 'profile')
 
@@ -33,10 +46,10 @@ def settings(request):
 		if user_form.is_valid() and profile_form.is_valid():
 			user_form.save()
 			profile_form.save()
-			messages.success(request, "Your profile was successfully updated to publicly reveal your true love for mayo pizza, naisu~!")
-			return HttpResponseRedirect('/naisu/')
+			messages.success(request, "Naisu~! Your profile was successfully updated (to publicly reveal your true love for mayo pizza).")
+			return HttpResponseRedirect('/settings/')
 		else:
-			messages.error(request, "Something went wrong :(")
+			messages.error(request, "Oh no! Something went wrong while trying to update your user settings — please correct the issues below :(")
 	else:
 		user_form = UserForm(instance=request.user)
 		profile_form = ProfileForm(instance=request.user.profile)

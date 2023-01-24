@@ -2,53 +2,62 @@
 
 {% load i18n %}
 
-{% block head_title %}{% trans "Account Connections" %}{% endblock %}
+{% block head_title %}{% trans "Connections" %}{% endblock %}
+
+{% load static %}
 
 {% block content %}
-<h1>{% trans "Account Connections" %}</h1>
+<h1>{% trans "Connections" %}</h1>
 
-{% if form.accounts %}
-<p>{% blocktrans %}You can sign in to your account using any of the following third party accounts:{% endblocktrans %}</p>
+<link rel="stylesheet" href="{% static 'connections.css' %}">
 
+<div class="grid">
+	<article>
+		<h3>Existing connections</h3>
+		{% if form.accounts %}
+		<p>{% blocktrans %}Here's a list of the social accounts you've connected with anipianolist! (^O^)／{% endblocktrans %}</p>
 
-<form method="post" action="{% url 'socialaccount_connections' %}">
-{% csrf_token %}
+		<form method="post" action="{% url 'socialaccount_connections' %}">
+		{% csrf_token %}
 
-<fieldset>
-{% if form.non_field_errors %}
-<div id="errorMsg">Oops! You need at least one social account connected.</div>
-{% endif %}
+		<fieldset>
+		{% for base_account in form.accounts %}
+		{% with base_account.get_provider_account as account %}
+		<div>
+		<label for="id_account_{{ base_account.id }}">
+		<input id="id_account_{{ base_account.id }}" type="radio" name="account" value="{{ base_account.id }}"/>
+		<span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }}"></span>
+		{{ account }}
+		</label>
+		</div>
+		{% endwith %}
+		{% endfor %}
+		{% if form.non_field_errors %}
+			<br>
+			<div id="errorMsg" class="errorlist">You need at least one social account connected, you baka~! (If you're trying to delete your account, head over to <a href="/settings/">Settings</a>)</div>
+		{% endif %}
+		<br>
+		<div>
+		<button type="submit">{% trans 'Remove' %}</button>
+		</div>
 
-{% for base_account in form.accounts %}
-{% with base_account.get_provider_account as account %}
-<div>
-<label for="id_account_{{ base_account.id }}">
-<input id="id_account_{{ base_account.id }}" type="radio" name="account" value="{{ base_account.id }}"/>
-<span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }}">{{account.get_brand.name}}</span>
-{{ account }}
-</label>
+		</fieldset>
+
+		</form>
+
+		{% else %}
+		<p>{% trans 'You currently have no social network accounts connected to this account.' %}</p>
+		{% endif %}
+	</article>
+	<article>
+		<h3>{% trans 'Add connections' %}</h3>
+		<p>You can connect your Discord or Google accounts via OAuth2 integration! This will only be used for authentication and is not shown publicly on your profile.</p>
+
+		<a role="button" class="connections-discord-button" href="/oauth2/discord/login/?process=connect">Connect to Discord</a>
+		<a role="button" class="connections-google-button" href="/oauth2/google/login/?process=connect">Connect to Google</a>
+
+		{% include "socialaccount/snippets/login_extra.html" %}
+	</article>
 </div>
-{% endwith %}
-{% endfor %}
-
-<div>
-<button type="submit">{% trans 'Remove' %}</button>
-</div>
-
-</fieldset>
-
-</form>
-
-{% else %}
-<p>{% trans 'You currently have no social network accounts connected to this account.' %}</p>
-{% endif %}
-
-<h2>{% trans 'Add a 3rd Party Account' %}</h2>
-
-<ul class="socialaccount_providers">
-{% include "socialaccount/snippets/provider_list.html" with process="connect" %}
-</ul>
-
-{% include "socialaccount/snippets/login_extra.html" %}
 
 {% endblock %}

@@ -1,0 +1,37 @@
+.socialaccount_provider::before {
+	display: inline-block;
+	width: 15px;
+    height: 15px;
+    margin-right: 11px;
+}
+
+.discord::before {
+	content: url('/static/svg/discord.svg');
+	transform: translateY(-4px) translateX(3px) scale(1.4);
+}
+
+.google::before {
+	content: url('/static/svg/google.svg');
+	transform: translateY(5px);
+}
+
+.connections-discord-button {
+	display: block;
+	margin-bottom: 1rem;
+	background-color: #5865F2;
+	border-color: #3e48ad;
+}
+
+.connections-discord-button:hover, .connections-discord-button:focus {
+	background-color: #3e48ad;
+}
+
+.connections-google-button {
+	display: block;
+	background-color: #de5246;
+	border-color: #96372f;
+}
+
+.connections-google-button:hover, .connections-google-button:focus {
+	border-color: #96372f;
+}
