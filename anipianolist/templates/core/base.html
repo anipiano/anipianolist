@@ -6,6 +6,8 @@
 
 {% include "core/init.html" %}
 
+{% load static %}
+
 <html data-theme="dark">
   <head>
     <title>{% block head_title %}{% endblock %} | anipianolist</title>
@@ -15,22 +17,30 @@
   </head>
   <body>
     {% block body %}
-    <figure>
     <nav class="menubar">
       <ul>
         <li><strong>anipianolist</strong></li>
       </ul>
       <ul>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
           {% if request.user.is_authenticated %}
-            <li><a href="{% url 'account_logout' %}" role="button">Sign Out</a></li>
+          <div class="nav-dropdown">
+            <button class="nav-profile" id="magic-button">
+              <li class="nav-username"><strong>{{ user.get_username }}</strong></li>
+              <img src="{{ user.profile.pfp.url }}" class="pfp nav-pfp">
+            </button>
+            <div id="nav-content" class="nav-dropdown-content invisible">
+              <a class="nav-dropdown-elements" href="/profile/">My profile</a>
+              <a class="nav-dropdown-elements" href="/settings/">Settings</a>
+              <hr>
+              <a class="nav-dropdown-elements nav-dropdown-logout" href="{% url 'account_logout' %}">Logout</a>
+            </div>
+          </div>
           {% else %}
             <li><a href="{% url 'account_login' %}" role="button">Login</a></li>
           {% endif %}
       </ul>
+      <script src="{% static 'magic-button.js' %}"></script>
     </nav>
-  </figure>
 
     <main class="container">
       {% if messages %}
