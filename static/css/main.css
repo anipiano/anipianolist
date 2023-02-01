@@ -7,10 +7,18 @@
 	padding-right: 40px;
 }
 
+nav li {
+	padding-top: 1rem;
+}
+
 .message-article {
 	padding: 1rem;
 	margin: 0;
 	margin-bottom: 2rem;
+}
+
+.add-to-list-button {
+	margin-right: 100px;
 }
 
 .pfp {
@@ -27,7 +35,12 @@
 	opacity: 0;
 }
 
+#nav-content {
+	margin-top: 1rem;
+}
+
 .nav-dropdown {
+	margin-top: 0.2rem;
 	position: relative;
 	display: inline-block;
 }
@@ -77,7 +90,6 @@
 	cursor: pointer;
 	height: 3.5rem;
 	padding: 0 5px 0 5px;
-	margin-top: 1rem;
 	line-height: 0;
 	border-radius: 50px;
 	transition: all 0.3s ease 0s;
@@ -87,6 +99,14 @@
 	background-color: #0e1317;
   	box-shadow: 0px 5px 10px rgba(146, 2, 247, 0.4);
   	transform: translateY(-2px);
+}
+
+#list-modal {
+	transition: all 0.1s ease 0s;
+}
+
+#list-close {
+	cursor: pointer;
 }
 
 main.container {

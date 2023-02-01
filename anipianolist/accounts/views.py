@@ -59,7 +59,7 @@ def settings(request):
 def user(request, username):
 	if User.objects.filter(username=username).exists():
 		context = {
-			'user': username
+			'profilename': username
 		}
 		return render(request, 'accounts/user.html', context)
 	else:

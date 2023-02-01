@@ -1,38 +1,68 @@
 magicButton = document.getElementById("magic-button");
-dropdownContent = document.getElementById("nav-content");
+magicModal = document.getElementById("nav-content");
+magicListener = magicButton.addEventListener("click", toggleMagicModal);
 
-magicListener = magicButton.addEventListener("click", toggleBurgerMenu);
+listButton = document.getElementById("list-add");
+listModal = document.getElementById("list-modal");
+listArticle = document.getElementById("list-article");
+listListener = listButton.addEventListener("click", toggleListModal);
 
-function killBurgerMenu() {
-    magicButton.classList.remove('nav-profile-active');
-    dropdownContent.classList.add('invisible');
-    dropdownContent.classList.remove('visible');
+listClose = document.getElementById("list-close");
+listCloseListener = listClose.addEventListener("click", toggleListModal);
+
+function killModal(modal) {
+    if (modal == magicModal) {
+        magicButton.classList.remove('nav-profile-active');
+    }
+
+    modal.classList.add('invisible');
+    modal.classList.remove('visible');
 }
 
-function toggleBurgerMenu() {
-    if (dropdownContent.classList.contains('invisible') == true) {
+function toggleMagicModal() {
+    toggleModal(magicModal)
+}
+
+function toggleListModal() {
+    toggleModal(listModal)
+}
+
+function toggleModal(modal) {
+    if (modal == magicModal) {
         magicButton.classList.add('nav-profile-active');
-        dropdownContent.classList.add('visible');
-        dropdownContent.classList.remove('invisible');
+    }
+    if (modal.classList.contains('invisible') == true) {
+        modal.classList.add('visible');
+        modal.classList.remove('invisible');
     } else {
-        killBurgerMenu();
+        killModal(modal);
     }
 }
 
 /* out-of-focus click handling */
+/* killModal is invoked pre-emptively */
 
 document.addEventListener('click', event => {
-    const magicButtonClick = magicButton.contains(event.target)
-    const dropdownContentClick = dropdownContent.contains(event.target)
+    const magicButtonClick = magicButton.contains(event.target);
+    const magicModalClick = magicModal.contains(event.target);
 
-    if (!magicButtonClick && !dropdownContentClick) {
-        killBurgerMenu()
-    }  
+    const listButtonClick = listButton.contains(event.target);
+    const listArticleClick = listArticle.contains(event.target);
+
+    if (!magicButtonClick && !magicModalClick) {
+        killModal(magicModal);
+    }
+
+    if (!listButtonClick && !listArticleClick) {
+        killModal(listModal);
+    }
+
 })
 
 document.addEventListener("keydown", ({key}) => {
     if (key === "Escape") {
-        killBurgerMenu()
+        killModal(magicModal);
+        killModal(listModal);
     }
 })
 
