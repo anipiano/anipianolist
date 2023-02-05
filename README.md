@@ -92,3 +92,11 @@ Different components of the anipianolist application are segmented into their ow
 
 - **accounts** - handles account management, IAM, profiles, authentication (note this is different from `account` which is an app in `django-allauth`)
 - **base** - handles the base of the site (e.g index page, general viewing pages)
+
+## i18n
+
+i18n is **not** supported at the time. 
+
+- Although some packages included may have i18n support, in general this is not maintained.
+- Templates may use `{% trans %}` template tags to indicate strings which should be translated. This is grandfathered from default templates but does not affect final output.
+- In the future, adding i18n support is reasonable simple from a technical viewpoint and involves updating templates and providing mappings. Therefore, i18n support can be added later when the need arises.
