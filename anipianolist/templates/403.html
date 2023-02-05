@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}
+  {% trans "Access forbidden" %}
+{% endblock %}
+
+{% load static %}
+
+{% block noheadingcontent %}
+<div class="grid httpresponse-grid">
+  <div class="httpresponse-grid-div"><img class="httpresponse-img" src="{% static 'bocchi.gif' %}"></div>
+  <div class="httpresponse-grid-div">
+  	<hgroup>
+  		<h1>Access forbidden</h1>
+	  	<h2>HTTP/1.1 403 Forbidden</h2>
+	</hgroup>
+	<p>Sorry... Gatekeeper-chan has blocked you from viewing this page! This usually occurs because your account doesn't have the correct permissions. Try logging in with an account that has the correct permissions.</p>
+	<a href="/" role="button">Return home</a>
+</div>
+{% endblock %}

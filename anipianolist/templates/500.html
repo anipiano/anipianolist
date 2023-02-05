@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}
+  {% trans "Server error" %}
+{% endblock %}
+
+{% load static %}
+
+{% block noheadingcontent %}
+<div class="grid httpresponse-grid">
+  <div class="httpresponse-grid-div"><img class="httpresponse-img" src="{% static 'bugcat.gif' %}"></div>
+  <div class="httpresponse-grid-div">
+  	<hgroup>
+  		<h1>Server error</h1>
+	  	<h2>HTTP/1.1 500 Internal Server Error</h2>
+	</hgroup>
+	<p>Sorry... server-kun exploded and was unable to process your request. The server might be overloaded, so please try again later. If you are experiencing this issue consistently, please reach out to support so we can come and fix it!</p>
+	<a href="/" role="button">Return home</a>
+</div>
+{% endblock %}

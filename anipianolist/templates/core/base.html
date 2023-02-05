@@ -68,8 +68,10 @@
           {% endfor %}
         </div>
       {% endif %}
-      <h1 class="heading">{% block heading %}{% endblock %}</h1>
-      {% block content %}
+      {% block noheadingcontent %}
+        <h1 class="heading">{% block heading %}{% endblock %}</h1>
+        {% block content %}
+        {% endblock %}
       {% endblock %}
     </main>
 

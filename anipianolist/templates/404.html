@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}
+  {% trans "Page not found" %}
+{% endblock %}
+
+{% load static %}
+
+{% block noheadingcontent %}
+<div class="grid httpresponse-grid">
+  <div class="httpresponse-grid-div"><img class="httpresponse-img" src="{% static 'facepalmcry.png' %}"></div>
+  <div class="httpresponse-grid-div">
+  	<hgroup>
+  		<h1>Page not found</h1>
+	  	<h2>HTTP/1.1 404 Not Found</h2>
+	</hgroup>
+	<p>Sorry... server-kun wasn't able to find the page you were looking for :( The page might have been deleted or relocated. Please check if you've entered the web address correctly.</p>
+	<a href="/" role="button">Return home</a>
+</div>
+{% endblock %}

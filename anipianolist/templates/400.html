@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}
+  {% trans "Bad request" %}
+{% endblock %}
+
+{% load static %}
+
+{% block noheadingcontent %}
+<div class="grid httpresponse-grid">
+  <div class="httpresponse-grid-div"><img class="httpresponse-img" src="{% static 'catstare.png' %}"></div>
+  <div class="httpresponse-grid-div">
+  	<hgroup>
+  		<h1>Bad request</h1>
+	  	<h2>HTTP/1.1 400 Bad Request</h2>
+	</hgroup>
+	<p>Gatekeeper-sama has blocked this request. The client should not repeat this request without modification. If you're experiencing this error consistently, please reach out to support!</p>
+	<a href="/" role="button">Return home</a>
+</div>
+{% endblock %}
