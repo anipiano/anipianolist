@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'accounts',
     'base', 
+    'database',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -65,7 +66,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'anipianolist.urls'
 
-LOGIN_REDIRECT_URL = '/profile/'
+LOGIN_REDIRECT_URL = '/login/'
 
 TEMPLATES = [
     {
@@ -82,7 +83,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -154,18 +154,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -179,7 +174,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, '../static/css/pico/'),
     os.path.join(BASE_DIR, '../static/css/pico/themes/'),
     os.path.join(BASE_DIR, '../static/svg/'),
-    os.path.join(BASE_DIR, '../static/js'),
+    os.path.join(BASE_DIR, '../static/js/'),
+    os.path.join(BASE_DIR, '../static/img/'),
+    os.path.join(BASE_DIR, '../static/img/httpresponse'),
 )
 
 ## Media uploads
@@ -191,3 +188,9 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+## Group names
+
+MAINTAINER_GROUP = env('MAINTAINER_GROUP')
+MODERATOR_GROUP = env('MODERATOR_GROUP')
+ADMIN_GROUP = env('ADMIN_GROUP')

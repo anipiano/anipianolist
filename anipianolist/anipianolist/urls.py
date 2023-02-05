@@ -44,4 +44,5 @@ urlpatterns = [
     path("connections/", connections, name="socialaccount_connections"),
     path("accounts/login/", account_login_redirect, name="account_login_redirect"),
     path('', include('accounts.urls')),
+    path('', include('database.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
