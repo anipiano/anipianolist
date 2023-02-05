@@ -92,6 +92,7 @@ Different components of the anipianolist application are segmented into their ow
 
 - **accounts** - handles account management, IAM, profiles, authentication (note this is different from `account` which is an app in `django-allauth`)
 - **base** - handles the base of the site (e.g index page, general viewing pages)
+- **database** - handles all features of the site which interact heavily with the database 
 
 ## i18n
 
