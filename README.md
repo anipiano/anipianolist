@@ -68,6 +68,16 @@ DB_PASSWORD=password
 ...
 ``` 
 
+#### Groups
+
+Set up these groups in Django to take advantage of internal management systems.
+
+- **Admin** - full access to systems except for internal Django dashboard (reserve this for superuser)
+- **Moderator** - access to modifying user data
+- **Maintainer** - access to modifying arrangement database entries
+
+All moderation actions are logged.
+
 ### Environment variables
 Use the provided `.env.example` template to set up your environment variables for local or production instances.
 ```
