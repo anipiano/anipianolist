@@ -12,8 +12,8 @@ class Profile(models.Model):
 		# like ForeignKey but a one-to-one relationship
 		# hence model deleted when User is deleted
 	pfp = models.ImageField(default='pfp/default.jpg', upload_to='pfp/%Y/%m/%d/', null=True, validators=[validate_file_size])
-	location = models.CharField(default=None, max_length=69, null=True)
-	bio = models.TextField(default=None, max_length=2000, null=True)
+	location = models.CharField(default=None, max_length=69, blank=True, null=True)
+	bio = models.TextField(default=None, max_length=2000, blank=True, null=True)
 
 """
 * In admin centre and the database, there will be blank fields such as First Name, Last Name and Email.

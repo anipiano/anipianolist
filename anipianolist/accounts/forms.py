@@ -13,10 +13,8 @@ class UserForm(forms.ModelForm):
 	def clean(self):
 		cleaned_data = super(UserForm, self).clean()
 		username = cleaned_data.get('username')
-		if ('@') in username:
-			self.add_error('username', 'Sorry, the @ symbol cannot be used.')
-		if ('+') in username:
-			self.add_error('username', 'Sorry, the + symbol cannot be used.')
+		if (('@') or ('+')) in username:
+			self.add_error('username', 'Your username can only contain letters, numbers, periods, hyphens or underscores, baka!')
 		return cleaned_data
 
 class ProfileForm(forms.ModelForm):
