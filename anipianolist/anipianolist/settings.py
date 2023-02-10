@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.discord',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+    'auditlog',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'auditlog.middleware.AuditlogMiddleware',
 ]
 
 ROOT_URLCONF = 'anipianolist.urls'
@@ -194,3 +196,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MAINTAINER_GROUP = env('MAINTAINER_GROUP')
 MODERATOR_GROUP = env('MODERATOR_GROUP')
 ADMIN_GROUP = env('ADMIN_GROUP')
+
+DJANGO_HASHIDS_SALT = env('HASHID_SALT')
+
+AUDITLOG_INCLUDE_ALL_MODELS=True
+
+AUDITLOG_EXCLUDE_TRACKING_FIELDS = (
+    "date_created",
+    "date_modified"
+)

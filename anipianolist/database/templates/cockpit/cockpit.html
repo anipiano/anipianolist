@@ -1,0 +1,52 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}
+  {% trans "Cockpit" %}
+{% endblock %}
+
+{% block heading %}
+  <nav aria-label="breadcrumb">
+    <ul>
+      <li>{% trans "Cockpit" %}</li>
+    </ul>
+  </nav>
+{% endblock %}
+
+{% load static %}
+{% load cockpit_extras %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'cockpit.css' %}">
+
+<details>
+  <summary role="button">Information about Cockpit</summary>
+  <p>Welcome to Cockpit! Cockpit is the internal moderation system for anipianolist. Access to different components is restricted by permissions, depending on what access level groups you are in.</p>
+  <p>You are a member of the following groups:</p>
+
+  <ul>
+    {% for groups in user.groups.all %}
+      <li>{{ groups }}</li>
+    {% endfor %}
+  </ul>
+
+  <p><strong class="danger">This is an internal system only. Data must be kept confidential in accordance with relevant privacy legislation. Access may be revoked at any time for abuse of Cockpit.</strong></p>
+</details>
+
+<ul>
+  {% if request.user|has_group:"Maintainer" or "Moderator" or "Admin" %} 
+    <li><a href="{% url 'dbms' %}">Database management</a></li>
+    <li><a href="{% url 'arrangements' %}">Stored arrangements</a></li>
+  {% endif %}
+
+  {% if request.user|has_group:"Moderator" or "Admin" %} 
+    <li><a href="{% url 'log' %}">Event log</a></li>
+  {% endif %}
+
+  {% if request.user|has_group:"Admin" %} 
+    <li><a href="{% url 'iam' %}">Identity and access management</a></li>
+  {% endif %}
+</ul>
+{% endblock %}

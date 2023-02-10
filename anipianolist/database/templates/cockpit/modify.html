@@ -1,0 +1,71 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}
+  {% trans "Modify entry" %} {{ entry_id }}
+{% endblock %}
+
+{% block heading %}
+  <nav aria-label="breadcrumb">
+    <ul>
+      <li><a href="{% url 'cockpit' %}">Cockpit</a></li>
+      <li><a href="{% url 'arrangements' %}">Arrangements</a></li>
+      <li>{% trans "Modify" %} <samp>{{ entry_id }}</samp></li>
+    </ul>
+  </nav>
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'cockpit.css' %}">
+
+<div class="grid modify-grid">
+  <div><article class="modify-card"><strong>Date created (UTC):</strong><br>{{ entry.date_created }}</article></div>
+  <div><article class="modify-card"><strong>Last modified (UTC):</strong><br>{{ entry.date_modified }}</article></div>
+  <div><article class="modify-card"><strong>Last modified by:</strong><br>{{ entry.last_modified_by }}</article></div>
+</div>
+<strong>Originally created by:</strong> {{ entry.created_by }}</li>
+<hr>
+<form action="" method="post">
+  {% csrf_token %}
+  {% for field in entry_form %}
+      {{ field.label_tag }}
+      {{ field }}
+      {% if field.errors %}
+        {% for error in field.errors %}
+          <p class="errorlist">{{ error }}</p>
+        {% endfor %}
+      {% endif %}
+      {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+      {% endif %}
+  {% endfor %}
+</form>
+<input type="submit" value="Submit">
+<br><br>
+
+<details>
+  <summary><span class="danger"><strong>Delete this entry</strong></span></summary>
+  <p>Before you proceed:</p>
+
+  <ul>
+    <li>All associated data with this entry (e.g reviews, ratings) will be permanently deleted</li>
+    <li>This action will be logged in the Event Log</li>
+    <li>There is no going back</li>
+  </ul>
+
+  <p>Please type <kbd>Bocchi</kbd> into the verification field to delete this entry permanently.</p>
+    
+    <form action="{% url 'delete' entry.entry_id %}" method="post">
+        {% csrf_token %}
+        <input id="verify-deletion" onkeyup="verifyDeletion('Bocchi')" type="text" style="display: block" placeholder="Verification field">
+        <input type="submit" value="Delete this entry now" id="koro-sensei" disabled="disabled" class="secondary">
+    </form>
+
+  <script src="{% static 'deletion.js' %}"></script>
+</details>
+
+{% endblock %}

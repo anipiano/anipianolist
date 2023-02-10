@@ -1,0 +1,44 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}
+  {% trans "Stored arrangements" %}
+{% endblock %}
+
+{% block heading %}
+  <nav aria-label="breadcrumb">
+    <ul>
+      <li><a href="{% url 'cockpit' %}">Cockpit</a></li>
+      <li>{% trans "Stored arrangements" %}</li>
+    </ul>
+  </nav>
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'cockpit.css' %}">
+{% if arrangement_list %}
+<table>
+  <tr>
+    <td>Title</td>
+    <td>Creator ID</td>
+    <td>YouTube ID</td>
+    <td>Modify</td>
+  </tr>
+  {% for entry in arrangement_list %}
+  <tr>
+    <th>{{ entry.title }}</th>
+    <th>{{ entry.creator_id }}</th>
+    <th>{{ entry.youtube_id }}</th>
+    <th><a href="{% url 'modify' entry.entry_id %}" role="button">Edit</a></th>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+No arrangements available.
+{% endif %}
+
+
+{% endblock %}

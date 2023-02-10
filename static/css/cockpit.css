@@ -1,0 +1,18 @@
+td {
+  font-weight: bold;
+}
+
+.dbms-card {
+  padding: 2rem;
+}
+
+.modify-grid {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.modify-card {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: center;
+}

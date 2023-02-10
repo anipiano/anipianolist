@@ -32,11 +32,11 @@
   <p>Please type <kbd>Nezuko</kbd> into the verification field to delete your account permanently.</p>
   <form action="/account-deletion/" method="post">
       {% csrf_token %}
-      <input id="verify-deletion" onkeyup="verifyDeletion()" type="text" style="display: block" placeholder="Verification field">
+      <input id="verify-deletion" onkeyup="verifyDeletion('Nezuko')" type="text" style="display: block" placeholder="Verification field">
       <input type="submit" value="Delete my account now" id="koro-sensei" disabled="disabled" class="secondary">
   </form>
 </details>
 
-<script src="{% static 'account-deletion.js' %}"></script>
+<script src="{% static 'deletion.js' %}"></script>
 
 {% endblock %}

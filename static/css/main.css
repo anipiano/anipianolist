@@ -1,4 +1,10 @@
-.errorlist {
+label.required:after {
+	content: " *";
+	font-weight: bold;
+	color: red;
+}
+
+.errorlist, .danger {
 	color: #facaca;
 }
 
@@ -200,7 +206,7 @@ article.flash-error {
 
 /* Variable and element overrides */
 
-a {
+a:not([role=button]) {
 	--primary: #bf63ff;
 	--primary-focus: #000000;
 }
