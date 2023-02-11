@@ -36,6 +36,7 @@ def dbms(request):
 
 	if request.method == 'POST':
 		entry_form = CreateEntryForm(request.POST)
+
 		if entry_form.is_valid():
 			stage_entry = entry_form.save(commit=False)
 			stage_entry.created_by = request.user
@@ -44,6 +45,7 @@ def dbms(request):
 			return redirect('dbms')
 		else:
 			messages.error(request, "Oh no! Something went wrong  — please correct the issues below :(")
+
 	else:
 		entry_form = CreateEntryForm(instance=request.user)
 
@@ -64,14 +66,12 @@ def modify(request, entry_id):
 		if entry_form.is_valid():
 			stage_entry = entry_form.save(commit=False)
 			stage_entry.last_modified_by = request.user
+			messages.success(request, "Naisu~! Operation completed!!")
 			stage_entry.save()
+			return redirect('modify', entry_id)
 		else:
 			messages.error(request, "Oh no! Something went wrong  — please correct the issues below :(")
-
-		entry_form.save()
-		messages.success(request, "Naisu~! Operation completed!!")
-		return redirect('modify', entry_id)
-
+			
 	else:
 		entry_form = CreateEntryForm(instance=entry)
 

@@ -29,6 +29,9 @@
 </div>
 <strong>Originally created by:</strong> {{ entry.created_by }}</li>
 <hr>
+  {% for error in entry_form.non_field_errors %}
+      <p class="errorlist">{{ error }}</p>
+  {% endfor %}
 <form action="" method="post">
   {% csrf_token %}
   {% for field in entry_form %}
@@ -43,8 +46,8 @@
         <p class="help">{{ field.help_text|safe }}</p>
       {% endif %}
   {% endfor %}
+  <input type="submit" value="Submit">
 </form>
-<input type="submit" value="Submit">
 <br><br>
 
 <details>
