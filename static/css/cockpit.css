@@ -16,3 +16,20 @@ td {
   padding-bottom: 1rem;
   text-align: center;
 }
+
+.cockpit-pfp {
+  border-radius: 50%;
+  width: 13rem; 
+  height: 13rem; 
+  margin: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.handle-entry-child {
+  display: inline-block;
+}
+
+[aria-label="breadcrumb"]>ul>li {
+  font-size: 1.4rem;
+}

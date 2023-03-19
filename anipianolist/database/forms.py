@@ -46,3 +46,6 @@ class CreateEntryForm(forms.ModelForm):
 					'track_name_rom', 'track_name_cjk', 'series_name', 'arranger', 'original_artist', 
 					'instruments', 'upload_date', 'sheet_music_url', 'internal_notes', 'public_notes']
 		exclude = ["created_by", "last_modified_by"]
+
+class ChannelBatchForm(forms.Form):
+	channel_handle = forms.SlugField(max_length=100, label="YouTube handle", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'LinuxPiano'}))

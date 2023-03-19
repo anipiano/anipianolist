@@ -47,7 +47,7 @@
 </details>
 
 <details>
-  <summary>Edit individual entries from the arrangement database</summary>
+  <summary>View and modify individual entries from the arrangement database</summary>
   <article class="dbms-card">
     The ten last modified arrangements are listed. To view all arrangements, <a href="{% url 'arrangements' %}">click here</a>.
     <br><br>
@@ -71,6 +71,32 @@
     {% endif %}
   </article>
 </details>
+
+<details>
+  <summary>Add entries in batch mode via YouTube playlist or channel</summary>
+  <article class="dbms-card">
+    <p>You can add entries in batch mode from a YouTube playlist. This will automatically fill the video title, video ID, upload date and creator ID.</p>
+    <p>You can also use this system to add YouTube channels via their playlist ID.
+    <hr>
+    <h4>Batch mode from channel</h4>
+    <form action="{% url 'channel_check' %}" method="post">
+      {% csrf_token %}
+      Enter the requested {{ channel_batch_form.channel_handle.label }} (without the @) below!
+      <br><br>
+      <div>
+        <div class="handle-entry-child">
+          <h3 style="transform: translateY(2px)">@</h3>
+        </div>
+        <div class="handle-entry-child">
+          {{ channel_batch_form.channel_handle }}
+        </div>
+      </div>
+      <input type="submit" value="Scan channel">
+    </form>
+  </article>
+</details>
+
+
 
 
 {% endblock %}

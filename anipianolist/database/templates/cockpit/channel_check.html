@@ -1,0 +1,61 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}
+  {% trans "Add entries from channel" %}
+{% endblock %}
+
+{% block heading %}
+  <nav aria-label="breadcrumb">
+    <ul>
+      <li><a href="{% url 'cockpit' %}">Cockpit</a></li>
+      <li><a href="{% url 'dbms' %}">Database management</a></li>
+      <li>{% trans "Add entries from channel" %}</li>
+    </ul>
+  </nav>
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'cockpit.css' %}">
+
+{% if youtube_channel_id %}
+  <p>Please confirm the below channel is the one you wish to add :D</p>
+  <article>
+    <div class="grid">
+      <div style="text-align: center">
+        <img src="{{ youtube_pfp }}" class="cockpit-pfp">
+        <br>
+        <a href="https://youtube.com/@{{ youtube_handle }}" role="button" class="secondary" style="width: 90%;">Visit YouTube channel</a>
+        <br>
+      </div>
+      <div>
+      <hgroup>
+        <h2>{{ youtube_title }}</h2>
+        <h3>{{ youtube_handle }}</h3>
+      </hgroup>
+      <p>{{ youtube_desc|linebreaks }}</p>
+      </div>
+    </div>
+  </article>
+  <br>
+  <div style="width: 100%;">
+  <form action="{% url 'channel_multiadd' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="youtube_channel_id" value="{{ youtube_channel_id }}">
+      <input type="hidden" name="youtube_handle" value="{{ youtube_handle }}">
+    <br>
+    <input type="submit" role="button" value="Add channel" style="width: 100%;"></input>
+  </form>
+  </div>
+  <a href="{% url 'dbms' %}">Or return back</a>
+{% else %}
+No results were returned 😭😭😭 Try searching for the exact username.
+<br><br>
+<a href="{% url 'dbms' %}" role="button" class="secondary" style="width: 100%">Or return back</a>
+{% endif %}
+
+
+{% endblock %}

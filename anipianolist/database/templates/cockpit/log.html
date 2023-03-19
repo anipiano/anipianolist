@@ -1,1 +1,42 @@
-log
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}
+  {% trans "Modify entry" %} {{ entry_id }}
+{% endblock %}
+
+{% block heading %}
+    {% trans "Modify entry" %} <samp>{{ entry_id }}</samp>
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'cockpit.css' %}">
+
+<a href="{% url 'arrangements' %}" role="button">Back to Arrangements</a>
+<div class="grid modify-grid">
+  <div><article class="modify-card"><strong>Date created (UTC):</strong><br>{{ entry.date_created }}</article></div>
+  <div><article class="modify-card"><strong>Last modified (UTC):</strong><br>{{ entry.date_modified }}</article></div>
+  <div><article class="modify-card"><strong>Last modified by:</strong><br>{{ entry.last_modified_by }}</article></div>
+</div>
+<form action="" method="post">
+{% csrf_token %}
+{% for field in entry_form %}
+    {{ field.label_tag }}
+    {{ field }}
+    {% if field.errors %}
+      {% for error in field.errors %}
+        <p class="errorlist">{{ error }}</p>
+      {% endfor %}
+    {% endif %}
+    {% if field.help_text %}
+      <p class="help">{{ field.help_text|safe }}</p>
+    {% endif %}
+{% endfor %}
+<input type="submit" value="Submit">
+<strong>Originally created by:</strong> {{ entry.created_by }}
+
+{% endblock %}

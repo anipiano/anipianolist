@@ -138,6 +138,10 @@ SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_EMAIL_REQUIRED = False
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 
+GOOGLE_API_KEY = env('GOOGLE_API_KEY')
+
+YOUTUBE_API_INSTANCE = env('YOUTUBE_API_INSTANCE')
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
