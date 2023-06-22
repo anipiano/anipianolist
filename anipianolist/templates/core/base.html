@@ -7,6 +7,7 @@
 {% include "core/init.html" %}
 
 {% load static %}
+{% load cockpit_extras %}
 
 <html data-theme="dark">
   <head>
@@ -33,6 +34,9 @@
               <div id="nav-content" class="nav-dropdown-content invisible">
                 <a class="nav-dropdown-elements" href="/profile/">My profile</a>
                 <a class="nav-dropdown-elements" href="/settings/">Settings</a>
+                {% if request.user|has_group:"Maintainer" or "Moderator" or "Admin" %} 
+                <a class="nav-dropdown-elements" href="{% url 'cockpit' %}">Cockpit</a>
+                {% endif %}
                 <hr>
                 <a class="nav-dropdown-elements nav-dropdown-logout" href="{% url 'account_logout' %}">Logout</a>
               </div>

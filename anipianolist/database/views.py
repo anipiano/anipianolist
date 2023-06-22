@@ -54,7 +54,7 @@ def channel_check(request):
 
 	# Early pre-emptive error catching to avoid passes through redundant logic (keep it clean!)
 	# This looks like a bunch of spaghetti, but essentially we're stepping through a series of tests and requests
-	# To help make it easier to explore, headings have been added to each stage of the execution process
+	# To help make it easier to explore, comment headings have been added to each stage of the execution process
 
 	### REQUEST NATURE CHECKS ###
 
