@@ -3,8 +3,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.exceptions import PermissionDenied, BadRequest
+from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import RequestContext
+from django.utils.timezone import make_aware
 
 from .models import ArrangementEntry
 from .forms import CreateEntryForm, ChannelBatchForm
@@ -142,40 +144,46 @@ def channel_multiadd(request):
 
 	return redirect('dbms')
 
-def multiadd(request, youtube_playlist_id, youtube_handle):
+def multiadd(request, youtube_playlist_id, youtube_handle, next_page_token="", duplicates=0):
 
 	params = {
 		'part':'snippet',
-		'playlistId':youtube_playlist_id,
+		'playlistId':youtube_playlist_id
 	}
+
+	if next_page_token != "":
+		params['pageToken'] = next_page_token
 
 	try:
 		r = requests.get((settings.YOUTUBE_API_INSTANCE + 'playlistItems'), params=params)
 		data = r.json()
-	except:
-		messages.error(request, "Oh no! Something went wrong in the request function >_<")
-	else:		
-		try:
-			for i in data['items']:
+	except Exception as e:
+		messages.error(request, "Oh no! Something went wrong in the request function >_<. The error was: ", e)
+	else:	
 
-				upload_date = datetime.fromtimestamp(i['snippet']['publishedAt'])
-				title = i['snippet']['title']
-				video_id = i['snippet']['resourceId']['videoId']
-				creator_id = youtube_handle[1:]
-				created_by = request.user
+		for i in data['items']:
 
+			upload_date = make_aware(datetime.fromtimestamp(i['snippet']['publishedAt']))
+			title = i['snippet']['title']
+			video_id = i['snippet']['resourceId']['videoId']
+			creator_id = youtube_handle[1:]
+			created_by = request.user
+
+			try:
 				entry = ArrangementEntry(title=title, youtube_id=video_id, upload_date=upload_date, creator_id=creator_id, created_by=created_by)
 				entry.save()
 
-		except:
-			messages.error(request, "Oh no! Something went wrong in the form submission T_T")
+			except IntegrityError: # youtube_id is unique=True
+				duplicates += 1;
 
-		else:
-			messages.success(request, "Nice stuff! Seems like everything went smoothly and @" + "youtube_handle" + " has been added to the database.")
+		try:
+			multiadd(request, youtube_playlist_id, youtube_handle, data['nextPageToken'], duplicates);
+			# api won't return any nextPageToken if it's the last page :)
+		except:	
+			messages.success(request, "Nice stuff! Seems like everything went smoothly and " + youtube_handle + " has been added to the database. " + str(duplicates) + " entries with duplicate video IDs or errors weren't added (you can find more info about these in the Event Log).")
 
 	# todo: 
-	# - fix dumb publishedAt
-	# - keep iterating through nextpagetoken and handling data
+	# - batch delete
 	# https://yt.lemnoslife.com/playlistItems?part=snippet&playlistId=UUnXp_AxmNywJJlnIc46QWwg
 
 @login_required

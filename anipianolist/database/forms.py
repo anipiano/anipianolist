@@ -12,7 +12,7 @@ class CreateEntryForm(forms.ModelForm):
 	youtube_id = forms.SlugField(max_length=11, required=False, label="YouTube video ID (11 alphanumeric digits)", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g 5wBN1WeK9Gc'}))
 	bilibili_cn = forms.SlugField(max_length=12, required=False, label="Bilibili.com video ID (12 alphanumeric digits)", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g BV1oq4y197XM'}))
 	bilibili_tv = forms.SlugField(max_length=10, required=False, label="Bilibili.tv video ID (10 numeric digits)", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g 2004101838'}))
-	creator_id = forms.CharField(max_length=100, required=True, label="Creator ID", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g WikiBidoz'}))
+	creator_id = forms.CharField(max_length=100, required=True, label="YouTube creator handle (without @)", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g WikiBidoz'}))
 	instruments = forms.CharField(max_length=200, initial="Piano", required=True, label="Instrument(s)", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g Piano, Bass Guitar'}))
 
 	# Optional fields

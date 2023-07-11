@@ -32,16 +32,16 @@
 </details>
 
 <ul>
-  {% if request.user|has_group:"Maintainer" or "Moderator" or "Admin" %} 
+  {% if request.user|is_admin or request.user|is_moderator or request.user|is_maintainer %} 
     <li><a href="{% url 'dbms' %}">Database management</a></li>
     <li><a href="{% url 'arrangements' %}">Stored arrangements</a></li>
   {% endif %}
 
-  {% if request.user|has_group:"Moderator" or "Admin" %} 
+  {% if request.user|is_admin or request.user|is_moderator %} 
     <li><a href="{% url 'log' %}">Event log</a></li>
   {% endif %}
 
-  {% if request.user|has_group:"Admin" %} 
+  {% if request.user|is_admin %} 
     <li><a href="{% url 'iam' %}">Identity and access management</a></li>
   {% endif %}
 </ul>

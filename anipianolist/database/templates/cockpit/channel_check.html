@@ -29,7 +29,7 @@
         <img src="{{ youtube_pfp }}" class="cockpit-pfp">
         <br>
         <a href="https://youtube.com/@{{ youtube_handle }}" role="button" class="secondary" style="width: 90%;">Visit YouTube channel</a>
-        <br>
+        <br><br>
       </div>
       <div>
       <hgroup>
@@ -45,7 +45,7 @@
   <form action="{% url 'channel_multiadd' %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="youtube_channel_id" value="{{ youtube_channel_id }}">
-      <input type="hidden" name="youtube_handle" value="{{ youtube_handle }}">
+    <input type="hidden" name="youtube_handle" value="{{ youtube_handle }}">
     <br>
     <input type="submit" role="button" value="Add channel" style="width: 100%;"></input>
   </form>
