@@ -42,13 +42,36 @@
   </article>
   <br>
   <div style="width: 100%;">
-  <form action="{% url 'channel_multiadd' %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="youtube_channel_id" value="{{ youtube_channel_id }}">
-    <input type="hidden" name="youtube_handle" value="{{ youtube_handle }}">
-    <br>
-    <input type="submit" role="button" value="Add channel" style="width: 100%;"></input>
-  </form>
+    <form action="{% url 'channel_multiadd' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="youtube_channel_id" value="{{ youtube_channel_id }}">
+      <input type="hidden" name="youtube_handle" value="{{ youtube_handle }}">
+      <br>
+      <input type="submit" role="button" value="Add channel" style="width: 100%;" onclick="showLoading()"></input>
+    </form>
+    <div id="loading-dialog" class="invisible">
+      <dialog open id="list-modal">
+          <article id="list-article">
+            <header>
+              <h3 style="margin-bottom: 0;">Adding {{ youtube_title }} to database...</h3>
+            </header>
+            <p>
+              This could take up to a couple minutes, depending on how many videos this user has.
+              <progress></progress>
+            </p>
+          </article>
+      </dialog>
+    </div>
+    <script>
+      /* i don't care about the unobtrusive javascript paradigm, cope */
+      loadingDialog = document.getElementById("loading-dialog");
+
+      function showLoading() {
+        console.log("click!");
+        loadingDialog.classList.add('visible');
+        loadingDialog.classList.remove('invisible');
+      }
+    </script>
   </div>
   <a href="{% url 'dbms' %}">Or return back</a>
 {% else %}

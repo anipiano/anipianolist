@@ -19,7 +19,41 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'cockpit.css' %}">
-{% if arrangement_list %}
+{% if page_obj %}
+<div class="pagination">
+    <span class="step-links">
+      <div class="grid modify-grid">
+        <div>
+          <article class="modify-card">
+
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <span>&sol;</span>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                <span>&sol;</span>
+            {% else %}
+                  <span class="disabled">&laquo; first &sol; previous &sol;</span>
+            {% endif %}
+
+                <span class="current">
+                  page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                  <span>&sol;</span>
+                </span>
+
+            {% if page_obj.has_next %}
+                <span class="pagination-forwards">
+                  <a href="?page={{ page_obj.next_page_number }}">next</a>
+                  <span>&sol;</span>
+                  <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                </span>
+            {% else %}
+                  <span class="disabled">next &sol; last &raquo;</span>
+            {% endif %}
+          </article>
+        </div>
+      </div>
+    </span>
+</div>
 <table>
   <tr>
     <td>Title</td>
@@ -27,11 +61,11 @@
     <td>YouTube ID</td>
     <td>Modify</td>
   </tr>
-  {% for entry in arrangement_list %}
+  {% for entry in page_obj %}
   <tr>
     <th>{{ entry.title }}</th>
     <th>{{ entry.creator_id }}</th>
-    <th>{{ entry.youtube_id }}</th>
+    <th><a href="https://youtube.com/watch?v={{ entry.youtube_id }}" target="_blank">{{ entry.youtube_id }}</a></th>
     <th><a href="{% url 'modify' entry.entry_id %}" role="button">Edit</a></th>
   </tr>
   {% endfor %}

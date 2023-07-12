@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.exceptions import PermissionDenied, BadRequest
+from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import RequestContext
@@ -49,7 +50,11 @@ def cockpit_render(request, pagename, group, context):
 @login_required
 def arrangements(request):
 	arrangement_list = ArrangementEntry.objects.order_by('-date_modified')
-	return cockpit_render(request, 'arrangements', settings.MAINTAINER_GROUP, {'arrangement_list': arrangement_list})
+	paginator = Paginator(arrangement_list, 25) 
+	page_number = request.GET.get("page")
+	page_obj = paginator.get_page(page_number)
+
+	return cockpit_render(request, 'arrangements', settings.MAINTAINER_GROUP, {'page_obj': page_obj})
 
 @login_required
 def channel_check(request):
@@ -161,6 +166,8 @@ def multiadd(request, youtube_playlist_id, youtube_handle, next_page_token="", d
 		messages.error(request, "Oh no! Something went wrong in the request function >_<. The error was: ", e)
 	else:	
 
+		processed = 0
+
 		for i in data['items']:
 
 			upload_date = make_aware(datetime.fromtimestamp(i['snippet']['publishedAt']))
@@ -168,6 +175,8 @@ def multiadd(request, youtube_playlist_id, youtube_handle, next_page_token="", d
 			video_id = i['snippet']['resourceId']['videoId']
 			creator_id = youtube_handle[1:]
 			created_by = request.user
+
+			processed += 1;
 
 			try:
 				entry = ArrangementEntry(title=title, youtube_id=video_id, upload_date=upload_date, creator_id=creator_id, created_by=created_by)
@@ -180,7 +189,10 @@ def multiadd(request, youtube_playlist_id, youtube_handle, next_page_token="", d
 			multiadd(request, youtube_playlist_id, youtube_handle, data['nextPageToken'], duplicates);
 			# api won't return any nextPageToken if it's the last page :)
 		except:	
-			messages.success(request, "Nice stuff! Seems like everything went smoothly and " + youtube_handle + " has been added to the database. " + str(duplicates) + " entries with duplicate video IDs or errors weren't added (you can find more info about these in the Event Log).")
+			if duplicates > 0:
+				messages.warning(request, youtube_handle + " was successfully added to the database, but " + str(duplicates) + " out of " + str(processed) + " entries weren't added due to having duplicate video IDs or errors. You can find more info about these in the Event Log.")
+			else:
+				messages.success(request, "Nice stuff! Seems like everything went smoothly and " + youtube_handle + " has been added to the database. ")
 
 	# todo: 
 	# - batch delete

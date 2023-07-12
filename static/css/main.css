@@ -4,6 +4,10 @@ label.required:after {
 	color: red;
 }
 
+.disabled {
+	color: #696969; /* nice */
+}
+
 .errorlist, .danger {
 	color: #facaca;
 }
