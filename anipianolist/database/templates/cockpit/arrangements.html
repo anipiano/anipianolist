@@ -64,7 +64,7 @@
   {% for entry in page_obj %}
   <tr>
     <th>{{ entry.title }}</th>
-    <th>{{ entry.creator_id }}</th>
+    <th><a href="https://youtube.com/@{{ entry.creator_id }}" target="_blank">{{ entry.creator_id }}</a></th>
     <th><a href="https://youtube.com/watch?v={{ entry.youtube_id }}" target="_blank">{{ entry.youtube_id }}</a></th>
     <th><a href="{% url 'modify' entry.entry_id %}" role="button">Edit</a></th>
   </tr>
