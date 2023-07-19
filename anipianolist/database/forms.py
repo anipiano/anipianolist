@@ -15,7 +15,6 @@ class CreateEntryForm(forms.ModelForm):
 	creator_id = forms.CharField(max_length=100, required=True, label="YouTube creator handle (without @)", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g WikiBidoz'}))
 	instruments = forms.CharField(max_length=200, initial="Piano", required=True, label="Instrument(s)", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g Piano, Bass Guitar'}))
 
-	# Optional fields
 	language = forms.ChoiceField(required=True, label="Track language", choices=LANGUAGE_CHOICES, label_suffix='')
 	track_name_en = forms.CharField(max_length=100, required=False, label="Track name - English", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g Crying for Rain'}))
 	track_name_rom = forms.CharField(max_length=100, required=False, label="Track name - Romanisation", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g Kawaki wo Ameku'}))
@@ -23,7 +22,7 @@ class CreateEntryForm(forms.ModelForm):
 	series_name = forms.CharField(max_length=100, required=False, label="Series name", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g Domestic Girlfriend'}))
 	arranger = forms.CharField(max_length=100, required=False, label="Arranger", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g Animenz Piano Sheets'}))
 	original_artist = forms.CharField(max_length=100, required=False, label="Original artist", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g Minami'}))
-	upload_date = forms.DateField(required=True, widget=forms.widgets.DateInput(attrs={'type': 'date'}), label="Upload date (UTC)", label_suffix='')
+	upload_date = forms.DateTimeField(required=True, widget=forms.widgets.DateTimeInput(attrs={'type': 'datetime-local'}), label="Upload date (UTC)", label_suffix='')
 	sheet_music_url = forms.CharField(max_length=420, required=False, label="Sheet music URL", label_suffix='', widget=forms.TextInput(attrs={'placeholder': 'e.g https://www.mymusicsheet.com/animenzzz/47276'}))
 	internal_notes = forms.CharField(max_length=420, required=False, widget=forms.Textarea, label="Internal notes (viewable only to Maintainers)", label_suffix='')
 	public_notes = forms.CharField(max_length=420, required=False, widget=forms.Textarea, label="Public notes")

@@ -7,6 +7,8 @@ from django.core.validators import RegexValidator, MinLengthValidator, URLValida
 
 from .language_choices import LANGUAGE_CHOICES
 
+from auditlog.registry import auditlog
+
 # Create your models here.
 
 class ArrangementEntry(models.Model):
@@ -46,3 +48,5 @@ class ArrangementEntry(models.Model):
 	date_modified = models.DateTimeField(auto_now=True, null=True)
 	created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name="creator")
 	last_modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name="last_editor")
+
+auditlog.register(ArrangementEntry)

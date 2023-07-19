@@ -171,19 +171,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = BASE_DIR / "../static"
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, '../static/'),
     os.path.join(BASE_DIR, '../static/css/'),
     os.path.join(BASE_DIR, '../static/css/pico/'),
     os.path.join(BASE_DIR, '../static/css/pico/themes/'),
     os.path.join(BASE_DIR, '../static/svg/'),
     os.path.join(BASE_DIR, '../static/js/'),
     os.path.join(BASE_DIR, '../static/img/'),
-    os.path.join(BASE_DIR, '../static/img/httpresponse'),
+    os.path.join(BASE_DIR, '../static/img/httpresponse/'),
+    os.path.join(BASE_DIR, '../static/highlightjs/'),
+    os.path.join(BASE_DIR, '../static/highlightjs/styles/'),
+    os.path.join(BASE_DIR, '../static/highlightjs/languages/')
 )
+
+# i literally have no idea what is going on here but i will fix this later :KEKW:
 
 ## Media uploads
 
@@ -203,9 +207,4 @@ ADMIN_GROUP = env('ADMIN_GROUP')
 
 DJANGO_HASHIDS_SALT = env('HASHID_SALT')
 
-AUDITLOG_INCLUDE_ALL_MODELS=True
-
-AUDITLOG_EXCLUDE_TRACKING_FIELDS = (
-    "date_created",
-    "date_modified"
-)
+AUDITLOG_INCLUDE_ALL_MODELS=False

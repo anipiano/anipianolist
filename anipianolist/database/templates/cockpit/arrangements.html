@@ -19,41 +19,9 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'cockpit.css' %}">
+
 {% if page_obj %}
-<div class="pagination">
-    <span class="step-links">
-      <div class="grid modify-grid">
-        <div>
-          <article class="modify-card">
-
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <span>&sol;</span>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                <span>&sol;</span>
-            {% else %}
-                  <span class="disabled">&laquo; first &sol; previous &sol;</span>
-            {% endif %}
-
-                <span class="current">
-                  page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-                  <span>&sol;</span>
-                </span>
-
-            {% if page_obj.has_next %}
-                <span class="pagination-forwards">
-                  <a href="?page={{ page_obj.next_page_number }}">next</a>
-                  <span>&sol;</span>
-                  <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                </span>
-            {% else %}
-                  <span class="disabled">next &sol; last &raquo;</span>
-            {% endif %}
-          </article>
-        </div>
-      </div>
-    </span>
-</div>
+{% include 'core/page_obj_pagination.html' %}
 <table>
   <tr>
     <td>Title</td>

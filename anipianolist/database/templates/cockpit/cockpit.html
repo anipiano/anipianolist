@@ -17,19 +17,16 @@
 
 <link rel="stylesheet" href="{% static 'cockpit.css' %}">
 
-<details>
-  <summary role="button">Information about Cockpit</summary>
-  <p>Welcome to Cockpit! Cockpit is the internal moderation system for anipianolist. Access to different components is restricted by permissions, depending on what access level groups you are in.</p>
-  <p>You are a member of the following groups:</p>
+<p>Welcome to Cockpit! Cockpit is the internal moderation system for anipianolist. Access to different components is restricted by permissions, depending on what access level groups you are in.</p>
+<p>You are a member of the following groups:</p>
 
-  <ul>
-    {% for groups in user.groups.all %}
-      <li>{{ groups }}</li>
-    {% endfor %}
-  </ul>
+<ul>
+  {% for groups in user.groups.all %}
+    <li>{{ groups }}</li>
+  {% endfor %}
+</ul>
 
-  <p><strong class="danger">This is an internal system only. Data must be kept confidential in accordance with relevant privacy legislation. Access may be revoked at any time for abuse of Cockpit.</strong></p>
-</details>
+<p><strong class="danger">This is an internal system only. Data must be kept confidential in accordance with relevant privacy legislation. Access may be revoked at any time for abuse of Cockpit.</strong></p>
 
 <ul>
   {% if request.user|is_admin or request.user|is_moderator or request.user|is_maintainer %} 

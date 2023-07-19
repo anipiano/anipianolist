@@ -3,40 +3,55 @@
 {% load i18n %}
 
 {% block head_title %}
-  {% trans "Modify entry" %} {{ entry_id }}
+  {% trans "Event log" %}
 {% endblock %}
 
 {% block heading %}
-    {% trans "Modify entry" %} <samp>{{ entry_id }}</samp>
+  <nav aria-label="breadcrumb">
+    <ul>
+      <li><a href="{% url 'cockpit' %}">Cockpit</a></li>
+      <li>{% trans "Event log" %}</li>
+    </ul>
+  </nav>
 {% endblock %}
 
 {% load static %}
 
 {% block content %}
-
 <link rel="stylesheet" href="{% static 'cockpit.css' %}">
 
-<a href="{% url 'arrangements' %}" role="button">Back to Arrangements</a>
-<div class="grid modify-grid">
-  <div><article class="modify-card"><strong>Date created (UTC):</strong><br>{{ entry.date_created }}</article></div>
-  <div><article class="modify-card"><strong>Last modified (UTC):</strong><br>{{ entry.date_modified }}</article></div>
-  <div><article class="modify-card"><strong>Last modified by:</strong><br>{{ entry.last_modified_by }}</article></div>
-</div>
-<form action="" method="post">
-{% csrf_token %}
-{% for field in entry_form %}
-    {{ field.label_tag }}
-    {{ field }}
-    {% if field.errors %}
-      {% for error in field.errors %}
-        <p class="errorlist">{{ error }}</p>
-      {% endfor %}
-    {% endif %}
-    {% if field.help_text %}
-      <p class="help">{{ field.help_text|safe }}</p>
-    {% endif %}
-{% endfor %}
-<input type="submit" value="Submit">
-<strong>Originally created by:</strong> {{ entry.created_by }}
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/solar-flare.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+<script>hljs.highlightAll()</script>
+
+{% if page_obj %}
+
+<p><strong class="danger">This information is sensitive and confidential.</strong></p>
+
+{% include 'core/page_obj_pagination.html' %}
+<table>
+  <tr>
+    <td>Timestamp (UTC)</td>
+    <td>Object</td>
+    <td>Changes</td>
+    <td>Action type</td>
+    <td>User</td>
+  </tr>
+  {% for entry in page_obj %}
+  <tr>
+    <th>{{ entry.timestamp }}</th>
+    <th><code>{{ entry.content_type }}</code></th>
+    <th><pre><code class="language-json" id="{{ entry.id }}">{{ entry.changes | pprint }}</code></pre></th>
+    <th>{{ entry.get_action_display }}</th>
+    <th>{{ entry.actor }}</th>
+  </tr>
+  {% endfor %}
+</table>
+
+{% else %}
+No log entries available.
+{% endif %}
 
 {% endblock %}

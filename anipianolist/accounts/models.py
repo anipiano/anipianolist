@@ -6,6 +6,8 @@ sys.path.append(os.path.abspath(os.path.join('..', 'anipianolist')))
 
 from anipianolist.validators import validate_file_size 
 
+from auditlog.registry import auditlog
+
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 		# This extends on top of the default Django user model
@@ -14,6 +16,8 @@ class Profile(models.Model):
 	pfp = models.ImageField(default='pfp/default.jpg', upload_to='pfp/%Y/%m/%d/', null=True, validators=[validate_file_size])
 	location = models.CharField(default=None, max_length=69, blank=True, null=True)
 	bio = models.TextField(default=None, max_length=2000, blank=True, null=True)
+
+auditlog.register(Profile)
 
 """
 * In admin centre and the database, there will be blank fields such as First Name, Last Name and Email.

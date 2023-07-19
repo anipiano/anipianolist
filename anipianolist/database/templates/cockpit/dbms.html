@@ -75,13 +75,11 @@
 <details>
   <summary>Add entries in batch mode via YouTube playlist or channel</summary>
   <article class="dbms-card">
-    <p>You can add entries in batch mode from a YouTube playlist. This will automatically fill the video title, video ID, upload date and creator ID.</p>
-    <p>You can also use this system to add YouTube channels via their playlist ID.
-    <hr>
     <h4>Batch mode from channel</h4>
+    <p>Add all videos from a {{ channel_batch_form.channel_handle.label }} channel, automatically filling video title, ID, creator handle and upload date.</p>
     <form action="{% url 'channel_check' %}" method="post">
       {% csrf_token %}
-      Enter the requested {{ channel_batch_form.channel_handle.label }} (without the @) below!
+      Enter a {{ channel_batch_form.channel_handle.label }} (without the @) below!
       <br><br>
       <div>
         <div class="handle-entry-child">

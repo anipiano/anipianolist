@@ -10,6 +10,7 @@ from django.template import RequestContext
 from django.utils.timezone import make_aware
 
 from .models import ArrangementEntry
+from auditlog.models import LogEntry
 from .forms import CreateEntryForm, ChannelBatchForm
 
 from datetime import datetime
@@ -47,14 +48,21 @@ def cockpit_render(request, pagename, group, context):
 	else:
 		raise PermissionDenied()
 
-@login_required
-def arrangements(request):
-	arrangement_list = ArrangementEntry.objects.order_by('-date_modified')
-	paginator = Paginator(arrangement_list, 25) 
+def list_render(request, entry, template, order, group):
+	requested_list = entry.objects.order_by(order)
+	paginator = Paginator(requested_list, 25) 
 	page_number = request.GET.get("page")
 	page_obj = paginator.get_page(page_number)
 
-	return cockpit_render(request, 'arrangements', settings.MAINTAINER_GROUP, {'page_obj': page_obj})
+	return cockpit_render(request, template, group, {'page_obj': page_obj})
+
+@login_required
+def arrangements(request):
+	return list_render(request, ArrangementEntry, 'arrangements', '-date_modified', settings.MAINTAINER_GROUP)
+
+@login_required
+def log(request):
+	return list_render(request, LogEntry, 'log', '-timestamp', settings.ADMIN_GROUP)
 
 @login_required
 def channel_check(request):
@@ -253,10 +261,6 @@ def delete(request, entry_id):
 @login_required
 def iam(request):
 	return cockpit_render(request, 'iam', settings.ADMIN_GROUP, {})
-
-@login_required
-def log(request):
-	return cockpit_render(request, 'log', settings.MODERATOR_GROUP, {})
 
 @login_required
 def modify(request, entry_id):
